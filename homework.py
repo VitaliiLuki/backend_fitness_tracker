@@ -1,20 +1,15 @@
 from typing import Dict
+from dataclasses import dataclass
 
 
+@dataclass
 class InfoMessage:
+    training_type: str
+    duration: float
+    distance: float
+    speed: float
+    calories: float
     """Информационное сообщение о тренировке."""
-    def __init__(self,
-                 training_type: str,
-                 duration: float,
-                 distance: float,
-                 speed: float,
-                 calories: float
-                 ) -> str:
-        self.training_type = training_type
-        self.duration = duration
-        self.distance = distance
-        self.speed = speed
-        self.calories = calories
 
     def get_message(self) -> str:
         return (f'Тип тренировки: {self.training_type}; '
@@ -120,7 +115,7 @@ def read_package(workout_type: str, data: list) -> Training:
         'WLK': SportsWalking}
     if workout_type in test_data:
         return test_data[workout_type](*data)
-    return print('У вас была нестандарстная тренировка! Так держать!')
+    raise KeyError("Unknown key value in test_data!")
 
 
 def main(training: Training) -> None:
@@ -133,7 +128,8 @@ if __name__ == '__main__':
     packages = [
         ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
-        ('WLK', [9000, 1, 75, 180]), ]
+        ('WLK', [9000, 1, 75, 180]),
+        ('SMTH', [999, 1, 2, 3]), ]
 
     for workout_type, data in packages:
         training = read_package(workout_type, data)
