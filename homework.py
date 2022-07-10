@@ -48,7 +48,7 @@ class Training:
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
-        return InfoMessage(self.__class__.__name__, self.duration,
+        return InfoMessage(type(self).__name__, self.duration,
                            self.get_distance(), self.get_mean_speed(),
                            self.get_spent_calories())
 
@@ -128,8 +128,7 @@ if __name__ == '__main__':
     packages = [
         ('SWM', [720, 1, 80, 25, 40]),
         ('RUN', [15000, 1, 75]),
-        ('WLK', [9000, 1, 75, 180]),
-        ('SMTH', [999, 1, 2, 3]), ]
+        ('WLK', [9000, 1, 75, 180]), ]
 
     for workout_type, data in packages:
         training = read_package(workout_type, data)
